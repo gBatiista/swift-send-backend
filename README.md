@@ -16,7 +16,7 @@ This application is a dockerized REST API built using Node.js with the Nest.js f
 $ docker-compose up --build    // note: Wait until the containers finish initializing correctly and the initial commands are completed.
 
 after that attach to swift-send-app container using:
-$ docker exec -it switf-send-app bash
+$ docker exec -it swift-send-app bash
 
 and run the following command inside swift-send-app container:
 $ npx prisma migrate dev --name init

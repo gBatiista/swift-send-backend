@@ -31,3 +31,40 @@ $ npx prisma studio
 ```
 Now prisma studio is online at localhost:5555
 
+Finally, you need to create the first user to start accessing all the routes.
+
+## Routes 
+### Users:
+  1 - Method: `POST` in `('/users')` to create a new user you need to pass in the body of the request a JSON with:
+   - {
+
+    `name: String`,
+
+    `email: String`,
+
+    `password: String`,
+
+    `isAdmin: Boolean`,
+
+  }
+
+  2 - Method: `POST` in `('/login')` To login you need to pass in the body of the request a JSON with:
+   - {
+
+    `email: String`,
+
+    `password: String`,
+
+  }
+
+  From now on, you need to include the authorization field in the request headers in the following format: Authorization:  `Bearer ${access_token}`
+
+  3 - Method: `DELETE` in `('/users/:id')` To delete an existing user you need to pass user id in the request parameters.
+
+  4 - Method: `'GET'` in `('/users/:id')` You will receive information about the user and the deliveries they have created.
+
+  5 - Method: `'GET'` in `('/users')` You will receive a list of all users.
+
+  6 - Method: `'PATCH'` in `('/users:id')` To update the information of an existing user, you need to pass the user ID in the request parameters, and the   new information in the request body.
+  
+  ### Deliveries:

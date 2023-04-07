@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateDeliveryDto, AddresseeDto } from './dto/create-delivery.dto';
 import { DeliveryWithUserEntity } from './entities/delivery.entity';
@@ -18,26 +18,30 @@ export class DeliveryService {
     } = createDeliveryDto;
     const { addressee } = createDeliveryDto;
 
-    const URL = `https://viacep.com.br/ws/${cep}/json/`;
-    const {
-      data: { uf, localidade, bairro },
-    } = await axios.get(URL);
+    try {
+      const URL = `https://viacep.com.br/ws/${cep}/json/`;
+      const {
+        data: { uf, localidade, bairro },
+      } = await axios.get(URL);
 
-    const completeAddress = {
-      ...addressee.address,
-      state: uf,
-      city: localidade,
-      district: bairro,
-    };
+      const completeAddress = {
+        ...addressee.address,
+        state: uf,
+        city: localidade,
+        district: bairro,
+      };
 
-    const completeDeliveryDto = {
-      ...createDeliveryDto,
-      addressee: { ...addressee, address: completeAddress },
-    };
+      const completeDeliveryDto = {
+        ...createDeliveryDto,
+        addressee: { ...addressee, address: completeAddress },
+      };
 
-    return this.prisma.delivery.create({
-      data: completeDeliveryDto,
-    });
+      return this.prisma.delivery.create({
+        data: completeDeliveryDto,
+      });
+    } catch (error) {
+      throw new HttpException('CEP does not exist', 400);
+    }
   }
 
   async findByAddressee(addressee: string) {

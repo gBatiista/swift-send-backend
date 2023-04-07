@@ -1,4 +1,3 @@
-import { Prisma } from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
   IsNotEmpty,
@@ -45,7 +44,7 @@ export class CreateDeliveryDto {
   @ValidateNested({ each: true })
   @Type(() => AddresseeDto)
   @IsNotEmptyObject()
-  addressee: Prisma.JsonObject;
+  addressee: AddresseeDto;
 
   @IsNumber()
   @IsNotEmpty()

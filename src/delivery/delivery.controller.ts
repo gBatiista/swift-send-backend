@@ -9,19 +9,14 @@ import {
   Query,
 } from '@nestjs/common';
 import { DeliveryService } from './delivery.service';
-import { AddresseeDto, CreateDeliveryDto } from './dto/create-delivery.dto';
+import { CreateDeliveryDto } from './dto/create-delivery.dto';
 
 @Controller('/')
 export class DeliveryController {
   constructor(private readonly deliveryService: DeliveryService) {}
 
   @Post()
-  create(
-    @Body()
-    createDeliveryDto: CreateDeliveryDto & {
-      addressee: AddresseeDto;
-    },
-  ) {
+  create(@Body() createDeliveryDto: CreateDeliveryDto) {
     return this.deliveryService.create(createDeliveryDto);
   }
 

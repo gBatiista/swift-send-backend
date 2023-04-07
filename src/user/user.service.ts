@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -6,12 +7,19 @@ import { UserWithDeliveryEntity } from './entities/userWithDelivery.entity';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
-    return this.prisma.user.create({
+    const user = await this.prisma.user.create({
       data: createUserDto,
     });
+
+    delete user.password;
+
+    return { access_token: await this.jwtService.signAsync(user) };
   }
 
   async findAll() {

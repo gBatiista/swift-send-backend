@@ -8,7 +8,7 @@
 
 ## Description
 
-This application is a dockerized REST API built using Node.js with the Nest.js framework and TypeScript that connects to a MySQL database through Prisma ORM, being able to CRUD new deliveries and manage users.
+This application is a dockerized REST API built using Node.js with the Nest.js framework and TypeScript that connects to a MySQL database through Prisma ORM using JWT authentication system, being able to CRUD new deliveries and manage users.
 
 ## Installation
 
@@ -88,21 +88,18 @@ Finally, you need to create the first user to start accessing all the routes.
 
   }
 
-  2 - Method: `POST` in `('/login')` To login you need to pass in the body of the request a JSON with:
-   - {
+  2 - Method: `DELETE` in `('/delete/:id')` To delete an existing delivery you need to pass delivery id in the request parameters.
 
-    `email: String`,
+  3 - Method: `'GET'` in `('/:id')` You will receive information about the delivery and the user who created it.
 
-    `password: String`,
+  4 - Method: `'GET'` in `('/')` You will receive a list of all deliveries, but if you pass via query: addressee or item or shipper, you can receive information about the type of search you sent, like this:
+  
+    `('/?shipper=<search by shipper>')`
+    
+    `('/?addressee=<search by addressee>')`
+    
+    `('/?item=<search by item>')`
 
-  }
-
-  From now on, you need to include the authorization field in the request headers in the following format: Authorization:  `Bearer ${access_token}`
-
-  3 - Method: `DELETE` in `('/users/:id')` To delete an existing user you need to pass user id in the request parameters.
-
-  4 - Method: `'GET'` in `('/users/:id')` You will receive information about the user and the deliveries they have created.
-
-  5 - Method: `'GET'` in `('/users')` You will receive a list of all users.
-
-  6 - Method: `'PATCH'` in `('/users:id')` To update the information of an existing user, you need to pass the user ID in the request parameters, and the   new information in the request body.
+  5 - Method: `'PATCH'` in `('/delivered/:id')` To update the delivery status to delivered.
+  
+  6 - Method: `'PATCH'` in `('/cancel/:id')` To update the delivery status to canceled.

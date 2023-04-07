@@ -7,3 +7,10 @@ export class UserEntity implements User {
   password: string;
   isAdmin: boolean;
 }
+
+export class UserWithoutPasswordEntity {
+  id: number;
+  name: string;
+  email: string;
+  isAdmin: boolean;
+}

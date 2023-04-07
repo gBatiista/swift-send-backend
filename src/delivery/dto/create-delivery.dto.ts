@@ -45,8 +45,4 @@ export class CreateDeliveryDto {
   @Type(() => AddresseeDto)
   @IsNotEmptyObject()
   addressee: AddresseeDto;
-
-  @IsNumber()
-  @IsNotEmpty()
-  userId: number;
 }

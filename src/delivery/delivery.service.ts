@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateDeliveryDto, AddresseeDto } from './dto/create-delivery.dto';
 import { DeliveryWithUserEntity } from './entities/delivery.entity';
 import axios from 'axios';
+import { UserWithoutPasswordEntity } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class DeliveryService {
@@ -10,6 +11,7 @@ export class DeliveryService {
 
   async create(
     createDeliveryDto: CreateDeliveryDto & { addressee: AddresseeDto },
+    user: UserWithoutPasswordEntity,
   ) {
     const {
       addressee: {
@@ -34,6 +36,7 @@ export class DeliveryService {
       const completeDeliveryDto = {
         ...createDeliveryDto,
         addressee: { ...addressee, address: completeAddress },
+        userId: user.id,
       };
 
       return this.prisma.delivery.create({

@@ -7,17 +7,22 @@ import {
   Param,
   Delete,
   Query,
+  Req,
 } from '@nestjs/common';
 import { DeliveryService } from './delivery.service';
 import { CreateDeliveryDto } from './dto/create-delivery.dto';
+import { Request } from 'express';
 
 @Controller('/')
 export class DeliveryController {
   constructor(private readonly deliveryService: DeliveryService) {}
 
   @Post()
-  create(@Body() createDeliveryDto: CreateDeliveryDto) {
-    return this.deliveryService.create(createDeliveryDto);
+  create(
+    @Body() createDeliveryDto: CreateDeliveryDto,
+    @Req() req: Request & { user },
+  ) {
+    return this.deliveryService.create(createDeliveryDto, req.user);
   }
 
   @Get()

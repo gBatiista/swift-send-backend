@@ -15,6 +15,7 @@ services:
       - db
     ports:
       - 3000:3000
+      - 5555:5555
     environment:
       MYSQL_USER: root
       MYSQL_PASSWORD: password

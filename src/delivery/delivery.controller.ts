@@ -58,7 +58,7 @@ export class DeliveryController {
   }
 
   @Delete('/delete/:id')
-  remove(@Param('id') id: string) {
-    return this.deliveryService.remove(+id);
+  remove(@Param('id') id: string, @Req() req: Request & { user }) {
+    return this.deliveryService.remove(+id, req.user);
   }
 }

@@ -1,4 +1,8 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateDeliveryDto, AddresseeDto } from './dto/create-delivery.dto';
 import { DeliveryWithUserEntity } from './entities/delivery.entity';
@@ -187,7 +191,13 @@ export class DeliveryService {
     });
   }
 
-  remove(id: number) {
+  remove(id: number, user: UserWithoutPasswordEntity) {
+    const { isAdmin } = user;
+
+    if (!isAdmin) {
+      return new UnauthorizedException();
+    }
+
     return this.prisma.delivery.delete({
       where: { id },
     });

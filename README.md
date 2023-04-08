@@ -88,7 +88,7 @@ Finally, you need to create the first user to start accessing all the routes.
 
   }
 
-  2 - Method: `DELETE` in `('/delete/:id')` To delete an existing delivery you need to pass delivery id in the request parameters.
+  2 - Method: `DELETE` in `('/delete/:id')` Only an admin user can delete a delivery, to delete an existing delivery you need to pass the delivery ID in the request parameters.
 
   3 - Method: `'GET'` in `('/:id')` You will receive information about the delivery and the user who created it.
 
